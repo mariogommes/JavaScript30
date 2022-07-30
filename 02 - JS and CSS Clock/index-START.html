@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
     <div class="clock">
       <div class="clock-face">
         <div class="hand hour-hand"></div>
@@ -14,7 +13,6 @@
         <div class="hand second-hand"></div>
       </div>
     </div>
-
 
   <style>
     html {
@@ -62,13 +60,48 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.09, 2.05, 0.58, 1);
+    }
+
+    .hour-hand {
+      width: 30%;
+      right: 50%;
+    }
+    
+    .second-hand {
+      width: 40%;
+      height: 3px;
+      right: 50%;
+      background: red;
     }
 
   </style>
 
   <script>
 
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    function setDate(){
+      const second = new Date().getSeconds();
+      const minute = new Date().getMinutes();
+      const hour = new Date().getHours();
+      
+      //segundos divididos por 60 multiplicados por 360graus + 90graus iniciais
+      const secondDegree = (second/60)*360 + 90;
+      const minuteDegree = (minute/60)*360 + 90;
+      const hourDegree = (hour/12)*360 + 90;
+      
+      secondHand.style = `transform: rotate(${secondDegree}deg)`;
+      minuteHand.style = `transform: rotate(${minuteDegree}deg)`;
+      hourHand.style = `transform: rotate(${hourDegree}deg)`;
+    }
+
+    setInterval(setDate, 1000);
   </script>
 </body>
 </html>
